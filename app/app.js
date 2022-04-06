@@ -1,7 +1,6 @@
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+const socket = io("http://localhost:3000/");
 
 console.log("server started");
-
 
 let newGamebutton = document.getElementById("new-game-button");
 let joinGamebutton = document.getElementById("join-game-button");
@@ -19,22 +18,25 @@ let name = document.getElementById("name");
 let hideContent = "none";
 let showContent = "block";
 
-
+//start new game on click
 newGamebutton.addEventListener("click", () => { 
     console.log("new game button clicked");
-    handleGameButtonClick(hideContent, showContent, hideContent);
+    handleGameButtonClick(hideContent, showContent, hideContent); //hide choosegame css, show lobby css, hide game css
     let playerName = name.value;
     socket.emit("new-game", playerName);
-    // redirect user to lobby.html
 });
 
 joinGamebutton.addEventListener("click", () => { 
     console.log("join game button clicked");
-    handleGameButtonClick(hideContent, showContent, hideContent);
-    //grab the value from the input
+    //if the code is greater than 0 and a number
     let roomCodeValue = roomCode.value;
-    let playerName = name.value;
-    socket.emit("join-game", {code : roomCodeValue, name : playerName});
+    if(roomCodeValue.length > 0 && !isNaN(roomCodeValue)){
+        handleGameButtonClick(hideContent, showContent, hideContent);
+        let playerName = name.value;
+        socket.emit("join-game", {code : roomCodeValue, name : playerName});
+    } else {
+        alert("Please enter a valid room code");
+    }
 });
 
 startGameButton.addEventListener("click", () => {
@@ -71,8 +73,8 @@ socket.on('player-names', data => {
     for(let i = 0; i < data.length; i++) {
         console.log(data[i].name);
         let p = document.createElement("p");
-        p.innerHTML = `${i}. ${data[i].name}`;
-        playerList.appendChild(p);
+        p.innerHTML = `${i}. ${data[i].name}`;//number of person + name
+        playerList.appendChild(p); //add number and name to the list of players
     }
 });
 
@@ -82,4 +84,3 @@ function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle) {
     lobbyDiv.style.display = lobbyStyle;
     gamePage.style.display = gameStyle;
 }
-

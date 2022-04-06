@@ -1,4 +1,4 @@
-var express = require('express'),
+let express = require('express'),
   app = express(),
   http = require('http'),
   socketIO = require('socket.io'),
@@ -16,9 +16,9 @@ server.listen(process.env.PORT || 3000);
 io = socketIO(server);
 
 //list of rooms, with the players
-var rooms = {};
+let rooms = {};
 
-
+//when a person loads the website 
 io.on('connection', function (socket) {
   console.log('a user connected');
   socket.on('disconnect', function () {
@@ -30,15 +30,15 @@ io.on('connection', function (socket) {
   });
 
 
-  //join  room
+  //when a player enters a NEW room/game
   socket.on('new-game', function(name) {
     console.log("user id: " + socket.id);
     //make a random 6 digit room code 
-    var roomCode = Math.floor(Math.random() * 1000000);
+    let roomCode = Math.floor(Math.random() * 1000000);
     console.log("room code: " + roomCode);
     socket.join(roomCode);
 
-    //create a new room
+    //create a new room object
     rooms[roomCode] = {
       roomCode: roomCode,
       players: [],
@@ -46,7 +46,7 @@ io.on('connection', function (socket) {
       gameOver: false,
     }
 
-    //add the player to the room
+    //add the player object to the room 
     rooms[roomCode].players.push({
       id: socket.id,
       name: name,
@@ -62,7 +62,7 @@ io.on('connection', function (socket) {
     sendPlayerNamesForLobby(roomCode);
   });
 
-  //join lobby 
+  //when a player JOINS an EXISTING room/game
   socket.on('join-game', function(data) {
     //console log the room code
     console.log(data.code);
@@ -85,6 +85,7 @@ io.on('connection', function (socket) {
     sendPlayerNamesForLobby(data.code);
   })
 
+  //when the game is started
   socket.on('start-game', function(){
     console.log("starting game");
     io.emit('game-started');
