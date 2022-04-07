@@ -18,6 +18,8 @@ io = socketIO(server);
 //list of rooms, with the players
 let rooms = {};
 
+//let arrayOfPlayers = []
+
 //when a person loads the website 
 io.on('connection', function (socket) {
   console.log('a user connected');
@@ -98,7 +100,7 @@ io.on('connection', function (socket) {
     console.log("voting start");
     //io.emit('player-names', rooms[data.code].players); //this func doesnt know what playes is
     //console.log('player-names');
-    getPlayerNamesForVoting(data.code);
+    //getPlayerNamesForVoting(data.code);
   })
 
 });
@@ -109,9 +111,10 @@ function sendPlayerNamesForLobby(roomCode) {
   //getPlayerNamesForVoting(roomCode);
 }
 
-function getPlayerNamesForVoting(roomCode) {
-  //display all players in the lobby
-  console.log("getPlayerNamesForVoting called" + roomCode);
-  //io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
-}
+// function getPlayerNamesForVoting(roomCode) {
+//   //display all players in the lobby
+//   console.log("getPlayerNamesForVoting called");
+//   console.log(arrayOfPlayers);
+//   //io.emit('player-names', rooms[roomCode].arrayOfPlayers);
+// }
 
