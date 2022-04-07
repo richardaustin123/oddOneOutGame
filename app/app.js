@@ -1,5 +1,5 @@
-// const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -14,7 +14,8 @@ let startGameButton = document.getElementById("start-game-button");
 let gamePage = document.getElementById("game-page");
 let playerList = document.getElementById("players");
 let name = document.getElementById("name");
-// let categoryButton = document.getElementById("category-button");
+let votingDiv = document.getElementById("voting-page");
+let categoryButton = document.getElementById("category-game-button");
 
 let hideContent = "none";
 let showContent = "block";
@@ -22,7 +23,8 @@ let showContent = "block";
 //start new game on click
 newGamebutton.addEventListener("click", () => { 
     console.log("new game button clicked");
-    handleGameButtonClick(hideContent, showContent, hideContent); //hide choosegame css, show lobby css, hide game css
+    //hide choosegame css, show lobby css, hide game css, hide voting css
+    handleGameButtonClick(hideContent, showContent, hideContent, hideContent); 
     let playerName = name.value;
     socket.emit("new-game", playerName);
 });
@@ -32,7 +34,7 @@ joinGamebutton.addEventListener("click", () => {
     //if the code is greater than 0 and a number
     let roomCodeValue = roomCode.value;
     if(roomCodeValue.length > 0 && !isNaN(roomCodeValue)){
-        handleGameButtonClick(hideContent, showContent, hideContent);
+        handleGameButtonClick(hideContent, showContent, hideContent, hideContent);
         let playerName = name.value;
         socket.emit("join-game", {code : roomCodeValue, name : playerName});
     } else {
@@ -42,8 +44,17 @@ joinGamebutton.addEventListener("click", () => {
 
 startGameButton.addEventListener("click", () => {
     console.log("start game button clicked");
-    handleGameButtonClick(hideContent, hideContent, showContent);
+    handleGameButtonClick(hideContent, hideContent, showContent, hideContent);
     socket.emit("start-game");
+});
+
+categoryButton.addEventListener("click", () => { 
+    console.log("category button clicked");
+    // let roomCodeValue = roomCode.value;
+    let playerName = name.value;
+    handleGameButtonClick(hideContent, hideContent, hideContent, showContent);
+    socket.emit("voting-start", playerName);
+
 });
 
 // btn.onclick = () => {
@@ -79,9 +90,10 @@ socket.on('player-names', data => {
     }
 });
 
-function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle) {
+function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, votingStyle) {
     console.log("game button clicked");
     chooseGameDiv.style.display = chooseGameStyle;
     lobbyDiv.style.display = lobbyStyle;
     gamePage.style.display = gameStyle;
+    votingDiv.style.display = votingStyle;
 }

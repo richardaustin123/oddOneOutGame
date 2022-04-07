@@ -24,11 +24,11 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     console.log('user disconnected');
   });
+
   socket.on('chat message', function (msg) {
     console.log('message from ' + socket.id + ': ' + msg.message);
     io.emit('message', msg);
   });
-
 
   //when a player enters a NEW room/game
   socket.on('new-game', function(name) {
@@ -54,12 +54,14 @@ io.on('connection', function (socket) {
       ready: false,
     });
 
-    console.log("player added to room: " + roomCode);
+    console.log("player " + name + " added to room: " + roomCode);
     console.log(rooms);
     console.log(rooms[roomCode].players);
 
     socket.emit('room-code', roomCode);
     sendPlayerNamesForLobby(roomCode);
+    //not printing for first person aka host when he is in 
+    //the new room lobby whereas eevryone in the existing room lobby gets the updates
   });
 
   //when a player JOINS an EXISTING room/game
@@ -78,7 +80,7 @@ io.on('connection', function (socket) {
       ready: false,
     });
 
-    console.log("player added to room: " + data.code);
+    console.log("player " + data.name + " added to room: " + data.code);
     console.log(rooms[data.code].players);
 
     socket.emit('room-code', data.code);
@@ -91,10 +93,25 @@ io.on('connection', function (socket) {
     io.emit('game-started');
   })
 
+  //when voting-start is called, emit the players in the lobby
+  socket.on('voting-start', function(data) {
+    console.log("voting start");
+    //io.emit('player-names', rooms[data.code].players); //this func doesnt know what playes is
+    //console.log('player-names');
+    getPlayerNamesForVoting(data.code);
+  })
+
 });
 
 function sendPlayerNamesForLobby(roomCode) {
   //send the player names to the lobby
   io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
+  //getPlayerNamesForVoting(roomCode);
+}
+
+function getPlayerNamesForVoting(roomCode) {
+  //display all players in the lobby
+  console.log("getPlayerNamesForVoting called" + roomCode);
+  //io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
 }
 
