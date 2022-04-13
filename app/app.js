@@ -1,5 +1,5 @@
-// const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+    const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -45,7 +45,10 @@ joinGamebutton.addEventListener("click", () => {
 startGameButton.addEventListener("click", () => {
     console.log("start game button clicked");
     handleGameButtonClick(hideContent, hideContent, showContent, hideContent);
-    socket.emit("start-game");
+    let roomCodeValue = roomCode.value;
+    let playerName = name.value;
+    socket.emit("start-game", {code : roomCodeValue, name : playerName});
+    //socket.emit("start-game");
 });
 
 categoryButton.addEventListener("click", () => { 
@@ -56,6 +59,8 @@ categoryButton.addEventListener("click", () => {
     socket.emit("voting-start", playerName);
 
 });
+
+
 
 // btn.onclick = () => {
 //     let val = message.value; // value of the input
@@ -89,6 +94,10 @@ socket.on('player-names', data => {
         playerList.appendChild(p); //add number and name to the list of players
     }
 });
+
+// socket.on('gameState', data => {
+//     data = JSON.parse(data);
+// });
 
 function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, votingStyle) {
     console.log("game button clicked");

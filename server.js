@@ -18,6 +18,8 @@ io = socketIO(server);
 //list of rooms, with the players
 let rooms = {};
 
+let clientRooms = {}; 
+
 //let arrayOfPlayers = []
 
 //when a person loads the website 
@@ -90,9 +92,20 @@ io.on('connection', function (socket) {
   })
 
   //when the game is started
-  socket.on('start-game', function(){
+  // socket.on('start-game', function(){
+  //   console.log("starting game");
+  //   io.emit('game-started');
+  // })
+  socket.on('start-game', function(data){
     console.log("starting game");
     io.emit('game-started');
+    //emitGameState(roomCode, rooms[roomCode]);
+    //emitNextStageToAll(data.code);
+  })
+
+  socket.on('game-over', function(data){
+    console.log("game over");
+    io.emit('game-over');
   })
 
   //when voting-start is called, emit the players in the lobby
@@ -117,4 +130,14 @@ function sendPlayerNamesForLobby(roomCode) {
 //   console.log(arrayOfPlayers);
 //   //io.emit('player-names', rooms[roomCode].arrayOfPlayers);
 // }
+
+// function emitGameState(roomCode, gameState) {
+//   console.log("emitGameState called");
+//   io.sockets.in(roomCode).emit('gameState', JSON.stringify(gameState));
+// }
+
+function emitNextStageToAll(roomCode) {
+  console.log("emitNextStageToAll called");
+  io.sockets.in(roomCode).emit('nextStage');
+}
 
