@@ -4,7 +4,7 @@ body {
     /* display: flex;  */
     justify-content: center;
     background-image: linear-gradient(170deg, #E55D87, #5FC3E4 120%);
-    /* background-color: rgb(57, 57, 57); */
+    background-color: #d76790;
     color: #fff;
     height: 100vh;
 }
