@@ -1,5 +1,5 @@
-    // const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+    const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -27,6 +27,8 @@ let playAgainButton = document.getElementById("play-again-button");
 let hideContent = "none";
 let showContent = "block";
 
+//let gameState = false;
+
 //start new game on click
 newGamebutton.addEventListener("click", () => { 
     console.log("new game button clicked");
@@ -51,41 +53,44 @@ joinGamebutton.addEventListener("click", () => {
 
 startGameButton.addEventListener("click", () => {
     console.log("start game button clicked");
-    handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
+    //handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
     let roomCodeValue = roomCode.value;
     let playerName = name.value;
     socket.emit("start-game", {code : roomCodeValue, name : playerName});
     //socket.emit("start-game");
+    //gameState = true;
 });
 
 categoryButton.addEventListener("click", () => { 
     console.log("category button clicked");
-    // let roomCodeValue = roomCode.value;
+    let roomCodeValue = roomCode.value;
     let playerName = name.value;
-    handleGameButtonClick(hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent);
-    socket.emit("reveal-waiting", playerName);
-
+    //handleGameButtonClick(hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent);
+    socket.emit("reveal-waiting", {code : roomCodeValue, name : playerName});
 });
 
 revealItemButton.addEventListener("click", () => {
     console.log("reveal item button clicked");
+    let roomCodeValue = roomCode.value;
     let playerName = name.value;
-    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, showContent, hideContent, hideContent);
-    socket.emit("reveal-item", playerName);
+    //handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, showContent, hideContent, hideContent);
+    socket.emit("reveal-item", {code : roomCodeValue, name : playerName});
 });
 
 readyButton.addEventListener("click", () => {
     console.log("ready button clicked");
+    let roomCodeValue = roomCode.value;
     let playerName = name.value;
-    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent);
-    socket.emit("players-ready", playerName);
+    //handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent);
+    socket.emit("players-ready", {code : roomCodeValue, name : playerName});
 });
 
 nextQuestionButton.addEventListener("click", () => {
     console.log("next question button clicked");
+    let roomCodeValue = roomCode.value;
     let playerName = name.value;
-    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent);
-    socket.emit("voting-start", playerName);
+    //handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent);
+    socket.emit("voting-start", {code : roomCodeValue, name : playerName});
 });
 
 playAgainButton.addEventListener("click", () => {
@@ -128,6 +133,26 @@ socket.on('player-names', data => {
     }
 });
 
+socket.on('categories-stage', data => {
+    handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
+});
+
+socket.on('player-roles-stage', data => { 
+    handleGameButtonClick(hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent);
+});
+
+socket.on('roles-reveal-stage', data => {
+    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, showContent, hideContent, hideContent);
+});
+
+socket.on('players-ready-stage', data => { 
+    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent);
+});
+
+socket.on('voting-start-stage', data => {
+    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent);
+});
+
 // socket.on('')
 
 // socket.on('gameState', data => {
@@ -144,3 +169,13 @@ function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, playStyle
     questionsDiv.style.display = questionsStyle;
     votingDiv.style.display = votingStyle;
 }
+
+// function handleGameState(gameState) {
+//     console.log("game state: " + gameState);
+//     if(gameState) {
+//         handleGameButtonClick(hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent);
+//         //socket.emit
+//     } else {
+//         handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
+//     }
+// }
