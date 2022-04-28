@@ -1,5 +1,5 @@
-    const socket = io("http://localhost:3000/");
-// const socket = io("https://oddoneoutgame.herokuapp.com/");
+    // const socket = io("http://localhost:3000/");
+const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -23,6 +23,21 @@ let readyButton = document.getElementById("ready-button");
 let questionsDiv = document.getElementById("questions-page");
 let nextQuestionButton = document.getElementById("next-question-button");
 let playAgainButton = document.getElementById("play-again-button");
+let playerListAgain = document.getElementById("playerlist");
+let playerPlay = document.getElementById("player-play");
+let playerNamesButton = document.getElementById("player-names-button");
+let playerButtons = document.getElementById("player-buttons");
+let playerReveal = document.getElementById("player-reveal");
+let food = document.getElementById("food");
+let ask = document.getElementById("player-ask");
+let asked = document.getElementById("player-asked");
+let question = document.getElementById("question");
+
+const foods = ["Apple", "Banana", "Mango", "Orange"];
+const players = ["",""];
+const questions = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"];
+const pairArray = [];
+// let fooditem = randomFood();
 
 let hideContent = "none";
 let showContent = "block";
@@ -133,24 +148,114 @@ socket.on('player-names', data => {
     }
 });
 
+socket.on('player-names-again', data => {
+    console.log("lobby names: " + data);
+    playerListAgain.innerHTML = "";
+    // playerPlay.innerHTML = "";
+    //for each person in the lobby, create a p element in the list
+    for(let i = 1; i <= data.length; i++) {
+        console.log(data[i-1].name);
+        let p = document.createElement("p");
+        p.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
+        playerListAgain.appendChild(p); //add number and name to the list of players
+        //playerPlay.innerHTML = `${i}. ${data[i-1].name}`;
+    }
+});
+
 socket.on('categories-stage', data => {
     handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
 });
 
 socket.on('player-roles-stage', data => { 
     handleGameButtonClick(hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent);
+    // let roomCodeValue = roomCode.value;
+    let playerName = name.value;
+    // let playerName = player1.name;
+     playerPlay.innerHTML = playerName;
 });
 
 socket.on('roles-reveal-stage', data => {
     handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, showContent, hideContent, hideContent);
+    let playerName = name.value;
+    //let playerName = player1.name;
+    playerReveal.innerHTML = playerName;
+
+    let fooditem = randomFood();
+    data.food = fooditem; //sets all players food to foodItem
+    randomImposter();//Picks an imposter when reveal button is pressed and changes food to Imposter for that player
+    for(i=0; i<data.length; i++)
+    {
+        if (data[i].food != "Imposter") //Displays food to players that dont have imposter
+        {
+            food.innerHTML = fooditem;
+        }
+        else //displays to player that has imposter
+        {
+            food.innerHTML = "You are the Imposter";
+        }
+    }
+
+    function randomFood(){
+        var foodItem = foods[Math.floor(Math.random() * foods.length)]; 
+        return foodItem;
+    }
+
+    function randomImposter() {
+        var imp = data[Math.floor(Math.random() * data.length)];
+        console.log(food);
+        imp.food = "Imposter";
+        return imp;
+    }
 });
 
 socket.on('players-ready-stage', data => { 
     handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent);
+
+    let playerName = name.value;
+    // let playerName = player1.name;
+    let playerasked = pairs();
+    
+    ask.innerHTML = playerName;
+    asked.innerHTML = playerasked;
+    question.innerHTML = randomQuestion();
+
+    function pairs() {
+        for(i=0; i<data.length; i++)
+        {
+            if(data[i+1] != null)
+            {
+                return data[i+1].name;
+            }
+            else
+            {
+                return data[0].name;
+            }
+        }
+    }
+
+    function randomQuestion() {
+        return questions[Math.floor(Math.random() * questions.length)];
+    }
 });
 
 socket.on('voting-start-stage', data => {
     handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent);
+    // playerButtons.innerHTML = "";
+    // //for each person in the lobby, create a p element in the list
+    // for(let i = 1; i <= data.length; i++) {
+    //     console.log(data[i-1].name);
+    //     let button = document.createElement("button");
+    //     button.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
+    //     playerButtons.appendChild(button); //add number and name to the list of players
+    // }
+    playerButtons.innerHTML = "";
+    //for each person in the lobby, create a p element in the list
+    for(let i = 1; i <= data.length; i++) {
+        console.log(data[i-1].name);
+        let p = document.createElement("button");
+        p.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
+        playerButtons.appendChild(p); //add number and name to the list of players
+    }
 });
 
 // socket.on('')
@@ -169,6 +274,20 @@ function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, playStyle
     questionsDiv.style.display = questionsStyle;
     votingDiv.style.display = votingStyle;
 }
+
+// function randomFood()
+// {
+//     var foodItem = foods[Math.floor(Math.random() * foods.length)]; 
+//     return foodItem;
+// }
+
+// function randomImposter()
+// {
+//     var imp = players[Math.floor(Math.random() * players.length)];
+//     console.log(food);
+//     imp.food = "Imposter";
+//     return imp;
+// }
 
 // function handleGameState(gameState) {
 //     console.log("game state: " + gameState);

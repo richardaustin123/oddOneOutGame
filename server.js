@@ -127,20 +127,21 @@ io.on('connection', function (socket) {
     console.log("reveal item");
     // io.emit('reveal-item');
     socket.emit('reveal-item', data.code);
-    io.sockets.in(data.code).emit('roles-reveal-stage', rooms[data.code].players);
+    io.local.emit('roles-reveal-stage', rooms[data.code].players);
   })
 
   socket.on('players-ready', function(data) {
     console.log("players ready");
     // io.emit('players-ready');   
     socket.emit('players-ready', data.code);
-    io.sockets.in(data.code).emit('players-ready-stage', rooms[data.code].players);
+    io.local.emit('players-ready-stage', rooms[data.code].players);
   })
 
   socket.on('voting-start', function(data) { 
     console.log("voting start");
     socket.emit('voting-start', data.code);
-    io.sockets.in(data.code).emit('voting-start-stage', rooms[data.code].players);
+    io.local.emit('voting-start-stage', rooms[data.code].players);
+    // io.local.emit('voting-buttons', rooms[data.code].players);
     //sendPlayerNamesForLobby(data.code);
   });
 
@@ -154,29 +155,13 @@ function sendPlayerNamesForLobby(roomCode) {
   //getPlayerNamesForVoting(roomCode);
 }
 
-// function getPlayerNamesForVoting(roomCode) {
-//   //display all players in the lobby
-//   console.log("getPlayerNamesForVoting called");
-//   console.log(arrayOfPlayers);
-//   //io.emit('player-names', rooms[roomCode].arrayOfPlayers);
-// }
-
-// function emitGameState(roomCode, gameState) {
-//   console.log("emitGameState called");
-//   io.sockets.in(roomCode).emit('gameState', JSON.stringify(gameState));
-// }
-
-// function emitNextStageToAll(roomCode) {
-//   console.log("emitNextStageToAll called");
-//   io.to(roomCode).emit('nextStage');
-// }
-
 function displayCategoryPageToAll(roomCode) {
   console.log("displayNextPageToAll called");
-  io.sockets.in(roomCode).emit('categories-stage', rooms[roomCode].players);
+  io.local.emit('categories-stage', rooms[roomCode].players);
+  io.local.emit('player-names-again', rooms[roomCode].players);
 }
 
 function displayRevealPlayersPageToAll(roomCode) {
   console.log("displayNextPageToAll called");
-  io.sockets.in(roomCode).emit('player-roles-stage', rooms[roomCode].players);
+  io.local.emit('player-roles-stage', rooms[roomCode].players);
 }
