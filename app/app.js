@@ -1,5 +1,5 @@
-    // const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+    const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -35,7 +35,16 @@ let question = document.getElementById("question");
 
 const foods = ["Apple", "Banana", "Mango", "Orange"];
 const players = ["",""];
-const questions = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"];
+const questions = ["What would you do if you had to eat this for the rest of your life?",
+"Could you see this being served in School cafeteria?",
+"Do you think you could make a milkshake with this?",
+"How many of these could you fit in your mouth at once?",
+"Would you consider this food as a necessity?",
+"How long could you walk for on a hike whilst wearing shoes made from this food?",
+"How many of theses would you be able to eat before you vomit?",
+"If you were stranded on an island and all you had were rotten versions of this, would you eat it?",
+"Could you see a game created with the main character being made of this food?",
+"Would you eat this as a topping on pizza?"];
 const pairArray = [];
 // let fooditem = randomFood();
 
@@ -253,8 +262,28 @@ socket.on('voting-start-stage', data => {
     for(let i = 1; i <= data.length; i++) {
         console.log(data[i-1].name);
         let p = document.createElement("button");
+        p.setAttribute("id", `vote-button${i}`);
+        p.setAttribute("class", "button-class");
         p.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
         playerButtons.appendChild(p); //add number and name to the list of players
+    }
+
+    function NoOfVotes() {
+        var numberOfVotes = 0;
+        for (var i = 0; i < data.length; i++) {
+            numberOfVotes = numberOfVotes + data[i].votes;
+        }
+        return numberOfVotes;
+    }
+    
+    function VoteFor(string) {
+        if (NoOfVotes() < data.length) {
+            for (var i = 0; i < data.length; i++) {
+                if (string == data[i].name) {
+                    data[i].votes = data[i].votes + 1;
+                }
+            }
+        }
     }
 });
 

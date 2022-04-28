@@ -23,15 +23,51 @@
         <div id="center-menu">
             <div id="center-menu-buttons">
                 <h3>Input your name: </h3>
-                <input id="name">
+                <input id="name" class="input-fields">
                 <ul id="messages"></ul>
                 <h3>Input a room code: </h3>
-                <input id="room-code"></input>
+                <input id="room-code" class="input-fields"></input>
                 <br><br>
-                <button id="new-game-button" class="menu-buttons" >New Game</button>
-                <button id="join-game-button" class="menu-buttons">Join Game</button>
+                <button id="new-game-button"  class="button-class">New Game</button>
+                <button id="join-game-button" class="button-class">Join Game</button>
             </div>
         </div>
+
+            <!-- <div class="growing-inputs">
+            <h3>Input your name: </h3>
+            <ul id="growing-search-freebie">
+                <li>
+                <div class="growing-search">
+                    <div class="input">
+                        <input type="text" name="search"/>
+                        <input type="text" name="search"/>
+                    </div><div class="submit">
+                    <button type="submit" name="go_search">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    </div>
+                </div>
+                </li>
+            </ul>
+            <h3>Input a room code: </h3>
+            <ul id="growing-search-freebie">
+                <li>
+                <div class="growing-search">
+                    <div class="input">
+                        <input type="text" name="search"/>
+                        <input type="text" name="search"/>
+                    </div><div class="submit">
+                    <button type="submit" name="go_search">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    </div>
+                </div>
+                </li>
+            </ul>
+            <br><br>
+            <button id="new-game-button"  class="button-class">New Game</button>
+            <button id="join-game-button" class="button-class">Join Game</button>
+        </div> -->
     </div>
 
     <div id="lobby-content">
@@ -42,10 +78,10 @@
         <h1 id="room-code-header"></h1>
         
         <!-- list of players -->
-        <ul id="players">
+        <ul id="players" class="player-list-class">
     
         </ul>
-        <button id="start-game-button">Start Game</button>
+        <button id="start-game-button" class="button-class">Start Game</button>
     </div>
 
     <div id="game-page">
@@ -56,10 +92,10 @@
             <h2>Game</h2>
             <div id="center-menu-buttons">
                 <h3>Select a category: </h3>
-                <button id="category-game-button" class="menu-buttons" >Food Game</button>
-                <button id="category-game-button" class="menu-buttons">Movies Game</button>
-                <button id="category-game-button" class="menu-buttons" >Sport Game</button>
-                <button id="category-game-button" class="menu-buttons">Celebrities Game</button>
+                <button id="category-game-button" class="button-class">Food Game</button>
+                <button id="category-game-button" class="button-class">Movies Game</button>
+                <button id="category-game-button" class="button-class">Sport Game</button>
+                <button id="category-game-button" class="button-class">Celebrities Game</button>
                 
             </div>
         </div>
@@ -74,8 +110,8 @@
             <div id="center-menu-buttons">
                 <h3>Find out if you're the imposter or not:</h3>
                 <h2 id="player-play">PLACEHOLDER NAME</h2>
-                <button id="reveal-item-button">Reveal</button>
-                <ul id="playerlist">
+                <button id="reveal-item-button" class="button-class">Reveal</button>
+                <ul id="playerlist" class="player-list-class">
     
                 </ul>
             </div>
@@ -92,7 +128,7 @@
                 <h3>Find out if you're the imposter or not:</h3>
                 <h2 id="player-reveal">PLACEHOLDER NAME</h2>
                 <p id="food">PLACEHOLDER ITEM</p>
-                <button id="ready-button">Ready Up</button>
+                <button id="ready-button" class="button-class">Ready Up</button>
             </div>
         </div>
     </div>
@@ -106,7 +142,7 @@
                 <h3 id="player-ask">PLACEHOLDER NAME ask:</h3>
                 <h1 id="player-asked">PLACEHOLDER NAME</h1>
                 <p id="question">PLACEHOLDER QUESTION</p>
-                <button id="next-question-button">Next</button>
+                <button id="next-question-button" class="button-class">Next</button>
             </div>
         </div>
     </div>
@@ -127,7 +163,7 @@
                 <ul id="player-buttons"></ul>
             </div>
             <br>
-            <button id="play-again-button">Play Again!</button>
+            <button id="play-again-button" class="button-class">Play Again!</button>
         </div>
     </div>
 
