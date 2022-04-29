@@ -20,6 +20,8 @@ let rooms = {};
 
 let clientRooms = {}; 
 
+const foods = ["Apple", "Banana", "Mango", "Orange"];
+
 //let arrayOfPlayers = []
 
 //when a person loads the website 
@@ -56,6 +58,7 @@ io.on('connection', function (socket) {
       name: name,
       score: 0,
       ready: false,
+      imposter: false
     });
 
     console.log("player " + name + " added to room: " + roomCode);
@@ -82,6 +85,7 @@ io.on('connection', function (socket) {
       name: data.name,
       score: 0,
       ready: false,
+      imposter: false
     });
 
     console.log("player " + data.name + " added to room: " + data.code);
@@ -127,13 +131,27 @@ io.on('connection', function (socket) {
     console.log("reveal item");
     // io.emit('reveal-item');
     socket.emit('reveal-item', data.code);
-    io.local.emit('roles-reveal-stage', rooms[data.code].players);
+
+    let code = data.code;
+    //decide one imposter
+    let imposter = rooms[code].players[Math.floor(Math.random() * rooms[code].players.length)];
+    imposter.imposter = true;
+    //select the food
+    let food = foods[Math.floor(Math.random() * foods.length)];
+
+    let object = {
+      food: food,
+      players: rooms[code].players,
+    }
+
+    io.local.emit('roles-reveal-stage', object);
   })
 
   socket.on('players-ready', function(data) {
     console.log("players ready");
     // io.emit('players-ready');   
     socket.emit('players-ready', data.code);
+    console.log(rooms[data.code].players);
     io.local.emit('questions-stage', rooms[data.code].players);
   })
 
@@ -165,3 +183,4 @@ function displayRevealPlayersPageToAll(roomCode) {
   console.log("displayNextPageToAll called");
   io.local.emit('player-roles-stage', rooms[roomCode].players);
 }
+

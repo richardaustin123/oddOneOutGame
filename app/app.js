@@ -1,5 +1,5 @@
-    // const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+    const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -51,6 +51,8 @@ const pairArray = [];
 let hideContent = "none";
 let showContent = "block";
 
+let globalPlayerName = "";
+
 //let gameState = false;
 
 //start new game on click
@@ -59,6 +61,7 @@ newGamebutton.addEventListener("click", () => {
     //hide choosegame css, show lobby css, hide game css, hide voting css
     handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent); 
     let playerName = name.value;
+    globalPlayerName = playerName;
     socket.emit("new-game", playerName);
 });
 
@@ -69,6 +72,7 @@ joinGamebutton.addEventListener("click", () => {
     if(roomCodeValue.length > 0 && !isNaN(roomCodeValue)){
         handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent);
         let playerName = name.value;
+        globalPlayerName = playerName;
         socket.emit("join-game", {code : roomCodeValue, name : playerName});
     } else {
         alert("Please enter a valid room code");
@@ -189,76 +193,43 @@ socket.on('roles-reveal-stage', data => {
     //let playerName = player1.name;
     playerReveal.innerHTML = playerName;
 
-    let fooditem = randomFood();
-    data.food = fooditem; //sets all players food to foodItem
-    randomImposter();//Picks an imposter when reveal button is pressed and changes food to Imposter for that player
-    for(i=0; i<data.length; i++)
-    {
-        if (data[i].food != "Imposter") //Displays food to players that dont have imposter
-        {
-            // document.getElementById("imposter-or-not").innerHTML = "You are not the imposter";
-            food.innerHTML = "Your item: " + fooditem;
+   let selectedFood = data.food;
+   let players = data.players;
+   
+   //check if this player is an imposter
+   players.forEach(player => {
+       if(player.name === globalPlayerName){
+           if(player.imposter == true){
+                //if this player is an imposter, show the food they were selected
+                selectedFood = "Imposter!";
+            }
         }
-        else //displays to player that has imposter
-        {
-            food.innerHTML = "You are the Imposter";
-        }
-    }
-
-    function randomFood(){
-        var foodItem = foods[Math.floor(Math.random() * foods.length)]; 
-        return foodItem;
-    }
-
-    function randomImposter() {
-        var imp = data[Math.floor(Math.random() * data.length)];
-        console.log(food);
-        imp.food = "Imposter";
-        return imp;
-    }
+    })
+    
+    food.innerHTML = selectedFood;
 });
 
 socket.on('questions-stage', data => { 
     handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent);
 
-    let playerName = name.value;
-    // let playerName = player1.name;
-    let playerasked = playerAaskPlayerB();
-    
-    ask.innerHTML = playerName + " ask:";
-    asked.innerHTML = playerasked;
-    question.innerHTML = randomQuestion();
+    let playerasked = "";
 
-    function pairs() {
-        // for(i=0; i<data.length; i++)
-        // {
-        //     if(data[i+1] != null)
-        //     {
-        //         return data[i+1].name;
-        //     }
-        //     else
-        //     {
-        //         return data[0].name;
-        //     }
-        // }
-    }
-
-    //loop through players and pick a random player to ask 
-    function playerAaskPlayerB() {
-        //let hasPlayerBeenAsked = false;
-        let alreadyBeenAsked = [];
-
-        for(i=0; i<data.length; i++) {
-            //get a random player that isn't playerName and that isnt in the alreadyBeenAsked array, when selected add them to array
-            if(data[i].name != playerName && alreadyBeenAsked.indexOf(data[i].name) == -1) {
-                alreadyBeenAsked.push(data[i].name);
-                return data[i].name;
+    data.forEach(function(player, index, theArray) {
+        console.log(player.name);
+        if(player.name == globalPlayerName){
+            //pick next player, wrap around
+            if(index == theArray.length - 1){
+                playerasked = theArray[0].name;
+            }
+            else{
+                playerasked = theArray[index+1].name;
             }
         }
-    }
-
+    });
     
-
+    ask.innerHTML = globalPlayerName + " ask:";
+    asked.innerHTML = playerasked;
+    question.innerHTML = randomQuestion();
 
     function randomQuestion() {
         return questions[Math.floor(Math.random() * questions.length)];
@@ -348,3 +319,5 @@ function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, playStyle
 //         handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
 //     }
 // }
+
+//loop through players and pick a random player to ask 
