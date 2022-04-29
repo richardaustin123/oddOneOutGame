@@ -313,11 +313,6 @@ socket.on('voting-start-stage', data => {
     }
 });
 
-// socket.on('')
-
-// socket.on('gameState', data => {
-//     data = JSON.parse(data);
-// });
 
 function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, playStyle, revealItemStyle, questionsStyle, votingStyle) {
     console.log("game button clicked");
