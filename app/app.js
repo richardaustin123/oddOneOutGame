@@ -1,5 +1,5 @@
-    // const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+    const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -196,7 +196,8 @@ socket.on('roles-reveal-stage', data => {
     {
         if (data[i].food != "Imposter") //Displays food to players that dont have imposter
         {
-            food.innerHTML = fooditem;
+            // document.getElementById("imposter-or-not").innerHTML = "You are not the imposter";
+            food.innerHTML = "Your item: " + fooditem;
         }
         else //displays to player that has imposter
         {
@@ -217,30 +218,47 @@ socket.on('roles-reveal-stage', data => {
     }
 });
 
-socket.on('players-ready-stage', data => { 
+socket.on('questions-stage', data => { 
     handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent);
 
     let playerName = name.value;
     // let playerName = player1.name;
-    let playerasked = pairs();
+    let playerasked = playerAaskPlayerB();
     
-    ask.innerHTML = playerName;
+    ask.innerHTML = playerName + " ask:";
     asked.innerHTML = playerasked;
     question.innerHTML = randomQuestion();
 
     function pairs() {
-        for(i=0; i<data.length; i++)
-        {
-            if(data[i+1] != null)
-            {
-                return data[i+1].name;
-            }
-            else
-            {
-                return data[0].name;
+        // for(i=0; i<data.length; i++)
+        // {
+        //     if(data[i+1] != null)
+        //     {
+        //         return data[i+1].name;
+        //     }
+        //     else
+        //     {
+        //         return data[0].name;
+        //     }
+        // }
+    }
+
+    //loop through players and pick a random player to ask 
+    function playerAaskPlayerB() {
+        //let hasPlayerBeenAsked = false;
+        let alreadyBeenAsked = [];
+
+        for(i=0; i<data.length; i++) {
+            //get a random player that isn't playerName and that isnt in the alreadyBeenAsked array, when selected add them to array
+            if(data[i].name != playerName && alreadyBeenAsked.indexOf(data[i].name) == -1) {
+                alreadyBeenAsked.push(data[i].name);
+                return data[i].name;
             }
         }
     }
+
+    
+
 
     function randomQuestion() {
         return questions[Math.floor(Math.random() * questions.length)];
@@ -249,24 +267,32 @@ socket.on('players-ready-stage', data => {
 
 socket.on('voting-start-stage', data => {
     handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent);
-    // playerButtons.innerHTML = "";
-    // //for each person in the lobby, create a p element in the list
-    // for(let i = 1; i <= data.length; i++) {
-    //     console.log(data[i-1].name);
-    //     let button = document.createElement("button");
-    //     button.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
-    //     playerButtons.appendChild(button); //add number and name to the list of players
-    // }
+    
     playerButtons.innerHTML = "";
-    //for each person in the lobby, create a p element in the list
+    //for each person in the lobby, create a button element in the list and make a line break after each button
     for(let i = 1; i <= data.length; i++) {
         console.log(data[i-1].name);
-        let p = document.createElement("button");
-        p.setAttribute("id", `vote-button${i}`);
-        p.setAttribute("class", "button-class");
-        p.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
-        playerButtons.appendChild(p); //add number and name to the list of players
+        let button = document.createElement("button");
+        button.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
+        button.setAttribute("id", `vote-button${i}`);
+        button.setAttribute("class", "button-class");
+        playerButtons.appendChild(button); //add number and name to the list of players
+        playerButtons.appendChild(document.createElement("br"));
+
+        //for every button made, if the button is clicked, keep a count of votes and display the count for each player
+        // button.addEventListener("click", function() {
+        //     let voteCount = document.getElementById(`vote-button${i}`).innerHTML;
+        //     console.log(voteCount);
+        //     document.getElementById(`vote-button${i}`).innerHTML = voteCount + 1;
+        // });
+
+        // for(i=0; i<data.length; i++) {
+        //     //get the button element for each button
+        //     document.getElementById(`vote-button${i}`);
+
+        // }
     }
+    
 
     function NoOfVotes() {
         var numberOfVotes = 0;

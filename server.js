@@ -134,7 +134,7 @@ io.on('connection', function (socket) {
     console.log("players ready");
     // io.emit('players-ready');   
     socket.emit('players-ready', data.code);
-    io.local.emit('players-ready-stage', rooms[data.code].players);
+    io.local.emit('questions-stage', rooms[data.code].players);
   })
 
   socket.on('voting-start', function(data) { 
