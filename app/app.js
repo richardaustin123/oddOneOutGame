@@ -1,5 +1,5 @@
-    // const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+    const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -44,7 +44,18 @@ const questions = ["What would you do if you had to eat this for the rest of you
 "How many of theses would you be able to eat before you vomit?",
 "If you were stranded on an island and all you had were rotten versions of this, would you eat it?",
 "Could you see a game created with the main character being made of this food?",
-"Would you eat this as a topping on pizza?"];
+"Would you eat this as a topping on pizza?",
+"Could you wield this as a weapon in a 1v1 duel?",
+"Could you make a house out of this?",
+"How likely are you to recommend this food to someone?",
+"How many of this food would you be able to eat in a day?",
+"Would you want to be sponsored by this food?",
+"How would you feel if this item of food became one universal currency for the entire world?",
+"If this food was used for the design of a new Pokémon, would you consider consuming said Pokémon?",
+"Does this food cure depression for the world?",
+"Could you see this being made into a flavour of ice cream?",
+"Could this food be used as new type of bioenergy for cars in the near future? And if not, why?",
+"Could this food be used as the logo for extremist propaganda?"];
 const pairArray = [];
 // let fooditem = randomFood();
 
