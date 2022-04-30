@@ -162,17 +162,17 @@ socket.on('player-names', data => {
 });
 
 socket.on('player-names-again', data => {
-    console.log("lobby names: " + data);
-    playerListAgain.innerHTML = "";
-    // playerPlay.innerHTML = "";
-    //for each person in the lobby, create a p element in the list
-    for(let i = 1; i <= data.length; i++) {
-        console.log(data[i-1].name);
-        let p = document.createElement("p");
-        p.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
-        playerListAgain.appendChild(p); //add number and name to the list of players
-        //playerPlay.innerHTML = `${i}. ${data[i-1].name}`;
-    }
+    // console.log("lobby names: " + data);
+    // playerListAgain.innerHTML = "";
+    // // playerPlay.innerHTML = "";
+    // //for each person in the lobby, create a p element in the list
+    // for(let i = 1; i <= data.length; i++) {
+    //     console.log(data[i-1].name);
+    //     let p = document.createElement("p");
+    //     p.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
+    //     playerListAgain.appendChild(p); //add number and name to the list of players
+    //     //playerPlay.innerHTML = `${i}. ${data[i-1].name}`;
+    // }
 });
 
 socket.on('categories-stage', data => {
@@ -321,3 +321,5 @@ function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, playStyle
 // }
 
 //loop through players and pick a random player to ask 
+
+//hello 
