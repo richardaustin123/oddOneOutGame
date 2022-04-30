@@ -16,73 +16,40 @@
 </head>
 <body>
 
-    <div id="choose-game">
-        <div id="title-banner">
-            <h1 id="title-heading">Universally Challenged</h1>
-        </div>
-        <div id="center-menu">
-            <div id="center-menu-buttons">
-                <h3>Input your name: </h3>
-                <input id="name" class="input-fields">
-                <ul id="messages"></ul>
-                <h3>Input a room code: </h3>
-                <input id="room-code" class="input-fields"></input>
-                <br><br>
-                <button id="new-game-button"  class="button-class">New Game</button>
-                <button id="join-game-button" class="button-class">Join Game</button>
+    <div class="box">
+        <div class="row header">
+            <div id="choose-game">
+                <div id="title-banner">
+                    <h1 id="title-heading">Universally Challenged</h1>
+                </div>
+                <div id="center-menu">
+                    <div id="center-menu-buttons">
+                        <h3>Input your name: </h3>
+                        <input id="name" class="input-fields">
+                        <ul id="messages"></ul>
+                        <h3>Input a room code: </h3>
+                        <input id="room-code" class="input-fields"></input>
+                        <br><br>
+                        <button id="new-game-button"  class="button-class">New Game</button>
+                        <button id="join-game-button" class="button-class">Join Game</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-            <!-- <div class="growing-inputs">
-            <h3>Input your name: </h3>
-            <ul id="growing-search-freebie">
-                <li>
-                <div class="growing-search">
-                    <div class="input">
-                        <input type="text" name="search"/>
-                        <input type="text" name="search"/>
-                    </div><div class="submit">
-                    <button type="submit" name="go_search">
-                        <span class="fa fa-search"></span>
-                    </button>
-                    </div>
-                </div>
-                </li>
-            </ul>
-            <h3>Input a room code: </h3>
-            <ul id="growing-search-freebie">
-                <li>
-                <div class="growing-search">
-                    <div class="input">
-                        <input type="text" name="search"/>
-                        <input type="text" name="search"/>
-                    </div><div class="submit">
-                    <button type="submit" name="go_search">
-                        <span class="fa fa-search"></span>
-                    </button>
-                    </div>
-                </div>
-                </li>
-            </ul>
-            <br><br>
-            <button id="new-game-button"  class="button-class">New Game</button>
-            <button id="join-game-button" class="button-class">Join Game</button>
-        </div> -->
-    </div>
-
-    <div id="lobby-content">
-        <div id="title-banner">
-            <h1 id="title-heading">Universally Challenged</h1>
-        </div>
-        <h2>Welcome to room: </h2>
-        <h1 id="room-code-header"></h1>
+        <div id="lobby-content">
+            <div id="title-banner">
+                <h1 id="title-heading">Universally Challenged</h1>
+            </div>
+            <h2>Welcome to room: </h2>
+            <h1 id="room-code-header"></h1>
+            
+            <!-- list of players -->
+            <ul id="players" class="player-list-class">
         
-        <!-- list of players -->
-        <ul id="players" class="player-list-class">
-    
-        </ul>
-        <button id="start-game-button" class="button-class">Start Game</button>
-    </div>
+            </ul>
+            <button id="start-game-button" class="button-class">Start Game</button>
+        </div>
 
     <div id="game-page">
         <div id="title-banner">
@@ -167,13 +134,19 @@
         </div>
     </div>
 
-    <div id="footer">
+    <div class="row content">
+        
+    </div>
+
+    <div id="row footer" style="margin-bottom: 10px;">
             <div id="footer-content">
                 <h3>Universally Challenged</h3>
                 <p>Created by:</p>
                 <p>Richard, Leah, Ali, Anas, Sam & Mason</p>
             </div>
     </div>
+
+</div>
     
 </body>
 </html>
