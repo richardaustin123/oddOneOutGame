@@ -17,121 +17,136 @@
 <body>
 
     <div class="box">
-        <div class="row header">
-            <div id="choose-game">
-                <div id="title-banner">
-                    <h1 id="title-heading">Universally Challenged</h1>
-                </div>
-                <div id="center-menu">
-                    <div id="center-menu-buttons">
-                        <h3>Input your name: </h3>
-                        <input id="name" class="input-fields">
-                        <ul id="messages"></ul>
-                        <h3>Input a room code: </h3>
-                        <input id="room-code" class="input-fields"></input>
-                        <br><br>
-                        <button id="new-game-button"  class="button-class">New Game</button>
-                        <button id="join-game-button" class="button-class">Join Game</button>
+        <div class="main-content">
+            <div class="row header">
+                <div id="choose-game">
+                    <div id="title-banner">
+                        <h1 id="title-heading">Universally Challenged</h1>
+                    </div>
+                    <div id="center-menu">
+                        <div id="center-menu-buttons">
+                            <h3>Input your name: </h3>
+                            <input id="name" class="input-fields">
+                            <ul id="messages"></ul>
+                            <h3>Input a room code: </h3>
+                            <input id="room-code" class="input-fields"></input>
+                            <br><br>
+                            <button id="new-game-button"  class="button-class">New Game</button>
+                            <button id="join-game-button" class="button-class">Join Game</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="lobby-content">
+            <div id="lobby-content">
+                <div id="title-banner">
+                    <h1 id="title-heading">Universally Challenged</h1>
+                </div>
+                <h2>Welcome to room: </h2>
+                <h1 id="room-code-header"></h1>
+                
+                <!-- list of players -->
+                <ul id="players" class="player-list-class">
+            
+                </ul>
+                <button id="start-game-button" class="button-class">Start Game</button>
+            </div>
+
+        <div id="game-page">
             <div id="title-banner">
                 <h1 id="title-heading">Universally Challenged</h1>
             </div>
-            <h2>Welcome to room: </h2>
-            <h1 id="room-code-header"></h1>
-            
-            <!-- list of players -->
-            <ul id="players" class="player-list-class">
-        
-            </ul>
-            <button id="start-game-button" class="button-class">Start Game</button>
-        </div>
-
-    <div id="game-page">
-        <div id="title-banner">
-            <h1 id="title-heading">Universally Challenged</h1>
-        </div>
-        <div id="center-menu">
-            <h2>Game</h2>
-            <div id="center-menu-buttons">
-                <h3>Select a category: </h3>
-                <button id="category-game-button" class="button-class">Food Game</button>
-                <button id="category-game-button" class="button-class">Movies Game</button>
-                <button id="category-game-button" class="button-class">Sport Game</button>
-                <button id="category-game-button" class="button-class">Celebrities Game</button>
-                
+            <div id="center-menu">
+                <h2>Game</h2>
+                <div id="center-menu-buttons">
+                    <h3>Select a category: </h3>
+                    <button id="category-game-button" class="button-class">Food Game</button>
+                    <button id="category-game-button" class="button-class">Movies Game</button>
+                    <button id="category-game-button" class="button-class">Sport Game</button>
+                    <button id="category-game-button" class="button-class">Celebrities Game</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="play-page">
-        <div id="title-banner">
-            <h1 id="title-heading">Universally Challenged</h1>
-        </div>
-        <div id="center-menu">
-            <h2>Get Ready</h2>
-            <div id="center-menu-buttons">
-                <h3>Find out if you're the imposter or not:</h3>
-                <h1 id="player-play">PLACEHOLDER NAME</h1>
-                <button id="reveal-item-button" class="button-class">Reveal</button>
-                <ul id="playerlist" class="player-list-class">
-    
-                </ul>
+        <div id="play-page">
+            <div id="title-banner">
+                <h1 id="title-heading">Universally Challenged</h1>
+            </div>
+            <div id="center-menu">
+                <h2>Get Ready</h2>
+                <div id="center-menu-buttons">
+                    <h3>Find out if you're the imposter or not:</h3>
+                    <h1 id="player-play">PLACEHOLDER NAME</h1>
+                    <button id="reveal-item-button" class="button-class">Reveal</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="reveal-item-page">
-        <div id="title-banner">
-            <h1 id="title-heading">Universally Challenged</h1>
-        </div>
-        <div id="center-menu">
-            <h2>Reveal</h2>
-            <div id="center-menu-buttons">
-                <h1 id="player-reveal">PLACEHOLDER NAME</h1>
-                <h3 id="imposter-or-not"></h3>
-                <h3 id="food">PLACEHOLDER ITEM</h3>
-                <button id="ready-button" class="button-class">Ready Up</button>
+        <div id="reveal-item-page">
+            <div id="title-banner">
+                <h1 id="title-heading">Universally Challenged</h1>
+            </div>
+            <div id="center-menu">
+                <h2>Reveal</h2>
+                <div id="center-menu-buttons">
+                    <h1 id="player-reveal">PLACEHOLDER NAME</h1>
+                    <h3 id="your-item-is"></h3>
+                    <h2 id="food">PLACEHOLDER ITEM</h2>
+                    <button id="ready-button" class="button-class">Ready Up</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="questions-page">
-        <div id="title-banner">
-            <h1 id="title-heading">Universally Challenged</h1>
-        </div>
-        <div id="center-menu">
-            <div id="center-menu-buttons">
-                <h3 id="player-ask">PLACEHOLDER NAME ask:</h3>
-                <h1 id="player-asked">PLACEHOLDER NAME</h1>
-                <p id="question">PLACEHOLDER QUESTION</p>
-                <button id="next-question-button" class="button-class">Next</button>
+        <div id="questions-page">
+            <div id="title-banner">
+                <h1 id="title-heading">Universally Challenged</h1>
+            </div>
+            <div id="center-menu">
+                <div id="center-menu-buttons">
+                    <h3 id="player-ask">PLACEHOLDER NAME ask:</h3>
+                    <h1 id="player-asked">PLACEHOLDER NAME</h1>
+                    <p id="question">PLACEHOLDER QUESTION</p>
+                    <button id="next-question-button" class="button-class">Next</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="voting-page">
-        <div id="title-banner">
-            <h1 id="title-heading">Universally Challenged</h1>
-        </div>
-        <div id="center-menu">
-            <h2>Voting</h2>
-            <div id="center-menu-buttons">
-                <h3>Select who you think is the odd one out: </h3>
-                <!-- <button id="voting-button" class="menu-buttons" >PLACEHOLDER NAME</button>
-                <button id="button" class="menu-buttons">PLACEHOLDER NAME</button>
-                <button id="button" class="menu-buttons" >PLACEHOLDER NAME</button>
-                <button id="button" class="menu-buttons">PLACEHOLDER NAME</button>
-                <button id="player-name-button"></button> -->
-                <ul id="player-buttons"></ul>
+        <div id="voting-page">
+            <div id="title-banner">
+                <h1 id="title-heading">Universally Challenged</h1>
             </div>
-            <br>
-            <button id="play-again-button" class="button-class">Play Again!</button>
+            <div id="center-menu">
+                <h2>Voting</h2>
+                <div id="center-menu-buttons">
+                    <h3>Select who you think is the odd one out: </h3>
+                    <!-- <button id="voting-button" class="menu-buttons" >PLACEHOLDER NAME</button>
+                    <button id="button" class="menu-buttons">PLACEHOLDER NAME</button>
+                    <button id="button" class="menu-buttons" >PLACEHOLDER NAME</button>
+                    <button id="button" class="menu-buttons">PLACEHOLDER NAME</button>
+                    <button id="player-name-button"></button> -->
+                    <ul id="player-buttons"></ul>
+                </div>
+                <br>
+                <!-- <button id="onto-scores-button" class="button-class">Reveal the votes!</button> -->
+            </div>
         </div>
+
+        <div id="scores-page">
+            <div id="title-banner">
+                <h1 id="title-heading">Universally Challenged</h1>
+            </div>
+            <div id="center-menu">
+                <h2>Who was the imposter???</h2>
+                <div id="center-menu-buttons">
+                    <ul id="playerlist" class="player-list-class">
+                        
+                    </ul>
+                    <h2 id="imposter-reveal"></h2>
+                </div><br>
+                <button id="play-again-button" class="button-class">Play Again!</button>
+            </div>
+        </div>
+
     </div>
 
     <div class="row content">

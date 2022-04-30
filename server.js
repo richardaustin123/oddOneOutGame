@@ -20,7 +20,7 @@ let rooms = {};
 
 let clientRooms = {}; 
 
-const foods = ["Apple", "Banana", "Mango", "Orange"];
+const foods = ["Pizza \u{1F355}", "Cottage Pie", "A Mango \u{1F96D}", "Caviar \u{1F95A}", "Pancakes \u{1F95E}", "Veggie Burger \u{1F354}"];
 
 //let arrayOfPlayers = []
 
@@ -37,10 +37,9 @@ io.on('connection', function (socket) {
   });
 
   //when a player enters a NEW room/game
-  socket.on('new-game', function(name) {
+  socket.on('new-game', function({ name, roomCode }) {
     console.log("user id: " + socket.id);
     //make a random 6 digit room code 
-    let roomCode = Math.floor(Math.random() * 1000000);
     console.log("room code: " + roomCode);
     socket.join(roomCode);
 
@@ -56,8 +55,7 @@ io.on('connection', function (socket) {
     rooms[roomCode].players.push({
       id: socket.id,
       name: name,
-      score: 0,
-      ready: false,
+      votes: 0,
       imposter: false
     });
 
@@ -83,8 +81,7 @@ io.on('connection', function (socket) {
     rooms[data.code].players.push({
       id: socket.id,
       name: data.name,
-      score: 0,
-      ready: false,
+      votes: 0,
       imposter: false
     });
 
@@ -158,9 +155,50 @@ io.on('connection', function (socket) {
   socket.on('voting-start', function(data) { 
     console.log("voting start");
     socket.emit('voting-start', data.code);
-    io.local.emit('voting-start-stage', rooms[data.code].players);
+    io.local.emit('voting-start-stage', { players: rooms[data.code].players, code: data.code });
     // io.local.emit('voting-buttons', rooms[data.code].players);
     //sendPlayerNamesForLobby(data.code);
+  });
+
+  socket.on('vote', function({ name, code}) {
+    //find the player in the room
+    let player = rooms[code].players.find(player => player.name === name);
+    //increment the votes
+    player.votes++;
+    //if the amount of votes added up equals the amount of players in the room
+    //loop through the players in this room
+    let votes = 0; 
+    let votedOffPlayer = null;
+    let mostVotes = 0;
+    for(let i = 0; i < rooms[code].players.length; i++) {
+      votes += rooms[code].players[i].votes;
+      if(rooms[code].players[i].votes > mostVotes) {
+        mostVotes = rooms[code].players[i].votes;
+        votedOffPlayer = rooms[code].players[i];
+      }
+    }
+
+    let imposter = rooms[code].players.find(player => player.imposter === true);
+
+    //if everyone has voted
+    if(votes === rooms[code].players.length) {
+      //if the imposter has the most votes
+      if(votedOffPlayer.imposter) {
+        //win
+        io.local.emit('score-stage', { won: true, imposter: imposter });
+      } else {
+        //lose
+        io.local.emit('score-stage', { won: false, imposter: imposter });
+      }
+    }
+  });
+
+  socket.on('score-reveal', function(data) {
+    console.log("score reveal");
+    socket.emit('score-reveal', data.code);
+    io.local.emit('score-stage', { players: rooms[data.code].players, code: data.code });
+    console.log({ players: rooms[data.code].players, code: data.code });
+    io.local.emit('player-names-again', { players: rooms[data.code].players, code: data.code });
   });
 
 });
@@ -176,7 +214,7 @@ function sendPlayerNamesForLobby(roomCode) {
 function displayCategoryPageToAll(roomCode) {
   console.log("displayNextPageToAll called");
   io.local.emit('categories-stage', rooms[roomCode].players);
-  io.local.emit('player-names-again', rooms[roomCode].players);
+  // io.local.emit('player-names-again', rooms[roomCode].players);
 }
 
 function displayRevealPlayersPageToAll(roomCode) {

@@ -1,5 +1,5 @@
-    // const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+    const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -29,11 +29,15 @@ let playerNamesButton = document.getElementById("player-names-button");
 let playerButtons = document.getElementById("player-buttons");
 let playerReveal = document.getElementById("player-reveal");
 let food = document.getElementById("food");
+let yourItemIs = document.getElementById("your-item-is");
 let ask = document.getElementById("player-ask");
 let asked = document.getElementById("player-asked");
 let question = document.getElementById("question");
+let scoresDiv = document.getElementById("scores-page");
+// let ontoScoresButton = document.getElementById("onto-scores-button");
+let imposterReveal = document.getElementById("imposter-reveal");
 
-const foods = ["Apple", "Banana", "Mango", "Orange"];
+const foods = ["Pizza \u{1F355}", "Cottage Pie", "A Mango \u{1F96D}", "Caviar \u{1F95A}", "Pancakes \u{1F95E}", "Veggie Burger \u{1F354}"];
 const players = ["",""];
 const questions = ["What would you do if you had to eat this for the rest of your life?",
 "Could you see this being served in School cafeteria?",
@@ -63,6 +67,7 @@ let hideContent = "none";
 let showContent = "block";
 
 let globalPlayerName = "";
+let globalRoomCode = 0;
 
 //let gameState = false;
 
@@ -70,21 +75,32 @@ let globalPlayerName = "";
 newGamebutton.addEventListener("click", () => { 
     console.log("new game button clicked");
     //hide choosegame css, show lobby css, hide game css, hide voting css
-    handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent); 
     let playerName = name.value;
-    globalPlayerName = playerName;
-    socket.emit("new-game", playerName);
+    let roomCode = Math.floor(Math.random() * 1000000);
+    globalRoomCode = roomCode;
+    if(playerName === "") {
+        alert("Please enter a name");
+    } else {
+        handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent); 
+        globalPlayerName = playerName;
+        socket.emit("new-game", {name: playerName, roomCode: roomCode});
+    }
 });
 
 joinGamebutton.addEventListener("click", () => { 
     console.log("join game button clicked");
+    let playerName = name.value;
     //if the code is greater than 0 and a number
     let roomCodeValue = roomCode.value;
+    globalRoomCode = roomCodeValue;
     if(roomCodeValue.length > 0 && !isNaN(roomCodeValue)){
-        handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent);
-        let playerName = name.value;
-        globalPlayerName = playerName;
-        socket.emit("join-game", {code : roomCodeValue, name : playerName});
+        if(playerName === "") {
+            alert("Please enter a name");
+        } else {
+            handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent);
+            globalPlayerName = playerName;
+            socket.emit("join-game", {code : roomCodeValue, name : playerName});
+        }
     } else {
         alert("Please enter a valid room code");
     }
@@ -95,7 +111,8 @@ startGameButton.addEventListener("click", () => {
     //handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
     let roomCodeValue = roomCode.value;
     let playerName = name.value;
-    socket.emit("start-game", {code : roomCodeValue, name : playerName});
+    console.log(roomCodeValue);
+    socket.emit("start-game", {code : globalRoomCode, name : playerName});
     //socket.emit("start-game");
     //gameState = true;
 });
@@ -105,7 +122,7 @@ categoryButton.addEventListener("click", () => {
     let roomCodeValue = roomCode.value;
     let playerName = name.value;
     //handleGameButtonClick(hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent);
-    socket.emit("reveal-waiting", {code : roomCodeValue, name : playerName});
+    socket.emit("reveal-waiting", {code : globalRoomCode, name : playerName});
 });
 
 revealItemButton.addEventListener("click", () => {
@@ -113,7 +130,7 @@ revealItemButton.addEventListener("click", () => {
     let roomCodeValue = roomCode.value;
     let playerName = name.value;
     //handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, showContent, hideContent, hideContent);
-    socket.emit("reveal-item", {code : roomCodeValue, name : playerName});
+    socket.emit("reveal-item", {code : globalRoomCode, name : playerName});
 });
 
 readyButton.addEventListener("click", () => {
@@ -121,7 +138,7 @@ readyButton.addEventListener("click", () => {
     let roomCodeValue = roomCode.value;
     let playerName = name.value;
     //handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent);
-    socket.emit("players-ready", {code : roomCodeValue, name : playerName});
+    socket.emit("players-ready", {code : globalRoomCode, name : playerName});
 });
 
 nextQuestionButton.addEventListener("click", () => {
@@ -129,12 +146,19 @@ nextQuestionButton.addEventListener("click", () => {
     let roomCodeValue = roomCode.value;
     let playerName = name.value;
     //handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent);
-    socket.emit("voting-start", {code : roomCodeValue, name : playerName});
+    socket.emit("voting-start", {code : globalRoomCode, name : playerName});
 });
+
+// ontoScoresButton.addEventListener("click", () => {
+//     console.log("onto scores button clicked");
+//     let roomCodeValue = roomCode.value;
+//     let playerName = name.value;
+//     socket.emit("score-reveal", {code : globalRoomCode, name : playerName});
+// });
 
 playAgainButton.addEventListener("click", () => {
     console.log("play again button clicked"); 
-    handleGameButtonClick(showContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent); 
+    handleGameButtonClick(showContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent); 
 });
 
 
@@ -173,33 +197,33 @@ socket.on('player-names', data => {
 });
 
 socket.on('player-names-again', data => {
-    // console.log("lobby names: " + data);
-    // playerListAgain.innerHTML = "";
-    // // playerPlay.innerHTML = "";
-    // //for each person in the lobby, create a p element in the list
-    // for(let i = 1; i <= data.length; i++) {
-    //     console.log(data[i-1].name);
-    //     let p = document.createElement("p");
-    //     p.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
-    //     playerListAgain.appendChild(p); //add number and name to the list of players
-    //     //playerPlay.innerHTML = `${i}. ${data[i-1].name}`;
-    // }
+    console.log("lobby names: " + data);
+    playerListAgain.innerHTML = "";
+    // playerPlay.innerHTML = "";
+    //for each person in the lobby, create a p element in the list
+    for(let i = 1; i <= data.length; i++) {
+        console.log(data[i-1].name);
+        let p = document.createElement("p");
+        p.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
+        playerListAgain.appendChild(p); //add number and name to the list of players
+        //playerPlay.innerHTML = `${i}. ${data[i-1].name}`;
+    }
 });
 
 socket.on('categories-stage', data => {
-    handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
+    handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent);
 });
 
 socket.on('player-roles-stage', data => { 
-    handleGameButtonClick(hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent);
+    handleGameButtonClick(hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
     // let roomCodeValue = roomCode.value;
     let playerName = name.value;
-    // let playerName = player1.name;
+    // let playerName = player1.name
      playerPlay.innerHTML = playerName;
 });
 
 socket.on('roles-reveal-stage', data => {
-    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, showContent, hideContent, hideContent);
+    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent);
     let playerName = name.value;
     //let playerName = player1.name;
     playerReveal.innerHTML = playerName;
@@ -213,6 +237,8 @@ socket.on('roles-reveal-stage', data => {
            if(player.imposter == true){
                 //if this player is an imposter, show the food they were selected
                 selectedFood = "Imposter!";
+            } else {
+                yourItemIs.innerHTML = "Your item is: ";
             }
         }
     })
@@ -221,7 +247,7 @@ socket.on('roles-reveal-stage', data => {
 });
 
 socket.on('questions-stage', data => { 
-    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent);
+    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent, hideContent);
 
     let playerasked = "";
 
@@ -247,34 +273,23 @@ socket.on('questions-stage', data => {
     }
 });
 
-socket.on('voting-start-stage', data => {
-    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent);
+socket.on('voting-start-stage', ({ players, code }) => {
+    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent, hideContent);
     
     playerButtons.innerHTML = "";
-    //for each person in the lobby, create a button element in the list and make a line break after each button
-    for(let i = 1; i <= data.length; i++) {
-        console.log(data[i-1].name);
+    //for each person in the lobby, create a button element in the list 
+    for(let i = 1; i <= players.length; i++) {
+        console.log(players[i-1].name);
         let button = document.createElement("button");
-        button.innerHTML = `${i}. ${data[i-1].name}`;//number of person + name
-        button.setAttribute("id", `vote-button${i}`);
+        button.innerHTML = `${i}. ${players[i-1].name}`;//number of person + name
+        button.setAttribute("id", `${players[i-1].name}`);
         button.setAttribute("class", "button-class");
         playerButtons.appendChild(button); //add number and name to the list of players
-        playerButtons.appendChild(document.createElement("br"));
-
-        //for every button made, if the button is clicked, keep a count of votes and display the count for each player
-        // button.addEventListener("click", function() {
-        //     let voteCount = document.getElementById(`vote-button${i}`).innerHTML;
-        //     console.log(voteCount);
-        //     document.getElementById(`vote-button${i}`).innerHTML = voteCount + 1;
-        // });
-
-        // for(i=0; i<data.length; i++) {
-        //     //get the button element for each button
-        //     document.getElementById(`vote-button${i}`);
-
-        // }
+        button.onclick = () => {
+            socket.emit("vote", {name : players[i-1].name, code : code});
+            console.log(players[i-1].name + " vote button pressed");
+        }
     }
-    
 
     function NoOfVotes() {
         var numberOfVotes = 0;
@@ -295,8 +310,18 @@ socket.on('voting-start-stage', data => {
     }
 });
 
+socket.on('score-stage', ({ won, imposter }) => {
+    handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent);
+    //if the imposter was voted correctly in server, reveal the imposter and say they were correct, else reveal imposter and say they were incorrect
+    if(won){
+        imposterReveal.innerHTML = "You guessed correct! <br>" + imposter.name + " was the imposter!";
+    } else {
+        imposterReveal.innerHTML = "You guessed incorrect! <br> " + imposter.name + " was the imposter!";
+    }
+});
 
-function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, playStyle, revealItemStyle, questionsStyle, votingStyle) {
+
+function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, playStyle, revealItemStyle, questionsStyle, votingStyle, scoresStyle) {
     console.log("game button clicked");
     chooseGameDiv.style.display = chooseGameStyle;
     lobbyDiv.style.display = lobbyStyle;
@@ -305,32 +330,8 @@ function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, playStyle
     revealItemDiv.style.display = revealItemStyle;
     questionsDiv.style.display = questionsStyle;
     votingDiv.style.display = votingStyle;
+    scoresDiv.style.display = scoresStyle;
 }
 
-// function randomFood()
-// {
-//     var foodItem = foods[Math.floor(Math.random() * foods.length)]; 
-//     return foodItem;
-// }
-
-// function randomImposter()
-// {
-//     var imp = players[Math.floor(Math.random() * players.length)];
-//     console.log(food);
-//     imp.food = "Imposter";
-//     return imp;
-// }
-
-// function handleGameState(gameState) {
-//     console.log("game state: " + gameState);
-//     if(gameState) {
-//         handleGameButtonClick(hideContent, hideContent, hideContent, showContent, hideContent, hideContent, hideContent);
-//         //socket.emit
-//     } else {
-//         handleGameButtonClick(hideContent, hideContent, showContent, hideContent, hideContent, hideContent, hideContent);
-//     }
-// }
-
-//loop through players and pick a random player to ask 
-
 //hello 
+
