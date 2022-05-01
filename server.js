@@ -59,7 +59,8 @@ io.on('connection', function (socket) {
       id: socket.id,
       name: name,
       votes: 0,
-      imposter: false
+      imposter: false,
+      // message: ""
     });
 
     console.log("player " + name + " added to room: " + roomCode);
@@ -85,7 +86,8 @@ io.on('connection', function (socket) {
       id: socket.id,
       name: data.name,
       votes: 0,
-      imposter: false
+      imposter: false,
+      // message: ""
     });
 
     console.log("player " + data.name + " added to room: " + data.code);
@@ -202,6 +204,12 @@ io.on('connection', function (socket) {
     io.local.emit('score-stage', { players: rooms[data.code].players, code: data.code });
     console.log({ players: rooms[data.code].players, code: data.code });
     io.local.emit('player-names-again', { players: rooms[data.code].players, code: data.code });
+  });
+
+  socket.on('chat-message-send', function(data) {
+    console.log('message: ' + data.message);
+    console.log('room: ' + data.roomCode);
+    io.to(data.roomCode).emit('message', data);
   });
 
 });

@@ -1,5 +1,5 @@
-// const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -39,6 +39,9 @@ let imposterReveal = document.getElementById("imposter-reveal");
 let imposterRevealName = document.getElementById("imposter-reveal-name");
 let howToPlayButton = document.getElementById("how-to-play-button");
 let howToPlayDiv = document.getElementById("how-to-instructions");
+let sendChatMessage = document.getElementById("send-chat-message");
+let chatMessages = document.getElementById("chat-messages");
+let inputChatMessage = document.getElementById("chat-message");
 
 const foods = ["Pizza \u{1F355}", "Cottage Pie", "A Mango \u{1F96D}", "Caviar \u{1F95A}", "Pancakes \u{1F95E}", "Veggie Burger \u{1F354}"];
 const players = ["",""];
@@ -64,7 +67,7 @@ const questions = ["What would you do if you had to eat this for the rest of you
 "Could this food be used as new type of bioenergy for cars in the near future? And if not, why?",
 "Could this food be used as the logo for extremist propaganda?",
 "A new law states you can only eat this food between two pieces of bread. Would you be happy to eat this as a sandwich?",
-"Coukd you kill a vapire with this food?"];
+"Could you kill a vapire with this food?"];
 const pairArray = [];
 // let fooditem = randomFood();
 
@@ -88,6 +91,7 @@ newGamebutton.addEventListener("click", () => {
     } else {
         handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent); 
         globalPlayerName = playerName;
+        console.log("Player pressed new game " + {name: playerName, roomCode: roomCode});
         socket.emit("new-game", {name: playerName, roomCode: roomCode});
     }
 });
@@ -97,13 +101,16 @@ joinGamebutton.addEventListener("click", () => {
     let playerName = name.value;
     //if the code is greater than 0 and a number
     let roomCodeValue = roomCode.value;
-    globalRoomCode = roomCodeValue;
+    //make it an integer
     if(roomCodeValue.length > 0 && !isNaN(roomCodeValue)){
         if(playerName === "") {
             alert("Please enter a name");
         } else {
             handleGameButtonClick(hideContent, showContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent);
             globalPlayerName = playerName;
+            console.log("Player pressed join game " + {code : roomCodeValue, name : playerName});
+            roomCodeValue = parseInt(roomCodeValue);
+            globalRoomCode = roomCodeValue;
             socket.emit("join-game", {code : roomCodeValue, name : playerName});
         }
     } else {
@@ -175,6 +182,16 @@ playAgainButton.addEventListener("click", () => {
     handleGameButtonClick(showContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent); 
 });
 
+sendChatMessage.onclick = () => {
+    let playerName = name.value;
+    globalPlayerName = playerName;
+    let val = document.getElementById("chat-message").value;
+    console.log("Text: " + val);
+    inputChatMessage.value = "";
+    inputChatMessage.focus();
+    console.log({ message : val, name : playerName, roomCode : globalRoomCode});
+    socket.emit('chat-message-send', { message : val, name : playerName, roomCode : globalRoomCode});
+};
 
 
 // btn.onclick = () => {
@@ -187,9 +204,11 @@ playAgainButton.addEventListener("click", () => {
 // };
 
 socket.on('message', data => {
+    console.log(data.message);
+    // chatMessages.innerHTML = "";
     let p = document.createElement("p");
-    p.innerHTML = data.message;
-    document.body.appendChild(p);
+    p.innerHTML = data.name + ": " + data.message;
+    chatMessages.appendChild(p);
 });
 
 socket.on('room-code', data => {
@@ -351,3 +370,9 @@ function handleGameButtonClick(chooseGameStyle, lobbyStyle, gameStyle, playStyle
 
 //hello 
 
+inputChatMessage.addEventListener("keypress", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        sendChatMessage.click();
+    }
+});
