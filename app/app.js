@@ -1,4 +1,4 @@
-    // const socket = io("http://localhost:3000/");
+// const socket = io("http://localhost:3000/");
 const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
@@ -36,6 +36,7 @@ let question = document.getElementById("question");
 let scoresDiv = document.getElementById("scores-page");
 // let ontoScoresButton = document.getElementById("onto-scores-button");
 let imposterReveal = document.getElementById("imposter-reveal");
+let imposterRevealName = document.getElementById("imposter-reveal-name");
 let howToPlayButton = document.getElementById("how-to-play-button");
 let howToPlayDiv = document.getElementById("how-to-instructions");
 
@@ -327,9 +328,11 @@ socket.on('score-stage', ({ won, imposter }) => {
     handleGameButtonClick(hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, hideContent, showContent);
     //if the imposter was voted correctly in server, reveal the imposter and say they were correct, else reveal imposter and say they were incorrect
     if(won){
-        imposterReveal.innerHTML = "You guessed correct! <br>" + imposter.name + " was the imposter!";
+        imposterReveal.innerHTML = "The team guessed correct! <br>";
+        imposterRevealName.innerHTML = imposter.name;
     } else {
-        imposterReveal.innerHTML = "You guessed incorrect! <br> " + imposter.name + " was the imposter!";
+        imposterReveal.innerHTML = "The team guessed incorrect! <br> ";
+        imposterRevealName.innerHTML = imposter.name;
     }
 });
 
