@@ -167,6 +167,43 @@ h1 {
     padding-left: 0px;
 }
 
+#how-to-play-button {
+  background-color: transparent;
+  border-radius: 999px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  margin: 3px 5px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  /* width: 7.6rem; */
+  word-break: break-word;
+  border: 0;
+}
+
+#how-to-instructions {
+  display: none;
+}
+
+#instructions-list {
+  /* display: none; */
+  list-style-type: none;
+  margin: 15px 0px;
+  padding: 0px;
+}
+
+#close-instructions-text {
+  font-size: 0.8rem;
+}
+
 
 /* .growing-search {
     padding: 5px 5px 5px 7px;

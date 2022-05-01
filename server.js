@@ -20,7 +20,10 @@ let rooms = {};
 
 let clientRooms = {}; 
 
-const foods = ["Pizza \u{1F355}", "Cottage Pie", "A Mango \u{1F96D}", "Caviar \u{1F95A}", "Pancakes \u{1F95E}", "Veggie Burger \u{1F354}"];
+const foods = ["Pizza \u{1F355}",      "Cottage Pie \u{1F967}",   "A Mango \u{1F96D}", "Caviar \u{1F95A}",
+               "Pancakes \u{1F95E}",   "Veggie Burger \u{1F354}", "Sushi \u{1F363}",   "Popcorn \u{1F37F}",
+               "A Doughnut \u{1F369}", "A Banana \u{1F34C}",      "Cupcake \u{1F9C1}", "falafel \u{1F9C6}",
+               "Salad \u{1F957}",      "A Taco \u{1F32E}",        "Butter 1F9C8",      "Peanuts \u{1F95C}"];
 
 //let arrayOfPlayers = []
 
@@ -207,6 +210,7 @@ function sendPlayerNamesForLobby(roomCode) {
   //send the player names to the lobby
   // io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
   io.local.emit('player-names', rooms[roomCode].players);
+  // io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
   //console.log(io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players));
   //getPlayerNamesForVoting(roomCode);
 }
@@ -215,10 +219,12 @@ function displayCategoryPageToAll(roomCode) {
   console.log("displayNextPageToAll called");
   io.local.emit('categories-stage', rooms[roomCode].players);
   // io.local.emit('player-names-again', rooms[roomCode].players);
+  // io.sockets.in(roomCode).emit('categories-stage', rooms[roomCode].players);
 }
 
 function displayRevealPlayersPageToAll(roomCode) {
   console.log("displayNextPageToAll called");
   io.local.emit('player-roles-stage', rooms[roomCode].players);
+  // io.sockets.in(roomCode).emit('categories-stage', rooms[roomCode].players);
 }
 

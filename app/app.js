@@ -36,6 +36,8 @@ let question = document.getElementById("question");
 let scoresDiv = document.getElementById("scores-page");
 // let ontoScoresButton = document.getElementById("onto-scores-button");
 let imposterReveal = document.getElementById("imposter-reveal");
+let howToPlayButton = document.getElementById("how-to-play-button");
+let howToPlayDiv = document.getElementById("how-to-instructions");
 
 const foods = ["Pizza \u{1F355}", "Cottage Pie", "A Mango \u{1F96D}", "Caviar \u{1F95A}", "Pancakes \u{1F95E}", "Veggie Burger \u{1F354}"];
 const players = ["",""];
@@ -59,7 +61,9 @@ const questions = ["What would you do if you had to eat this for the rest of you
 "Does this food cure depression for the world?",
 "Could you see this being made into a flavour of ice cream?",
 "Could this food be used as new type of bioenergy for cars in the near future? And if not, why?",
-"Could this food be used as the logo for extremist propaganda?"];
+"Could this food be used as the logo for extremist propaganda?",
+"A new law states you can only eat this food between two pieces of bread. Would you be happy to eat this as a sandwich?",
+"Coukd you kill a vapire with this food?"];
 const pairArray = [];
 // let fooditem = randomFood();
 
@@ -103,6 +107,15 @@ joinGamebutton.addEventListener("click", () => {
         }
     } else {
         alert("Please enter a valid room code");
+    }
+});
+
+howToPlayButton.addEventListener("click", () => {
+    //show the howToPlayDiv
+    if(howToPlayDiv.style.display === hideContent) {
+        howToPlayDiv.style.display = showContent;
+    } else {
+        howToPlayDiv.style.display = hideContent;
     }
 });
 
