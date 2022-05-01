@@ -146,7 +146,7 @@ io.on('connection', function (socket) {
       players: rooms[code].players,
     }
 
-    io.local.emit('roles-reveal-stage', object);
+    io.to(data.code).emit('roles-reveal-stage', object);
   })
 
   socket.on('players-ready', function(data) {
@@ -154,13 +154,13 @@ io.on('connection', function (socket) {
     // io.emit('players-ready');   
     socket.emit('players-ready', data.code);
     console.log(rooms[data.code].players);
-    io.local.emit('questions-stage', rooms[data.code].players);
+    io.to(data.code).emit('questions-stage', rooms[data.code].players);
   })
 
   socket.on('voting-start', function(data) { 
     console.log("voting start");
     socket.emit('voting-start', data.code);
-    io.local.emit('voting-start-stage', { players: rooms[data.code].players, code: data.code });
+    io.to(data.code).emit('voting-start-stage', { players: rooms[data.code].players, code: data.code });
     // io.local.emit('voting-buttons', rooms[data.code].players);
     //sendPlayerNamesForLobby(data.code);
   });
@@ -190,10 +190,10 @@ io.on('connection', function (socket) {
       //if the imposter has the most votes
       if(votedOffPlayer.imposter) {
         //win
-        io.local.emit('score-stage', { won: true, imposter: imposter });
+        io.to(code).emit('score-stage', { won: true, imposter: imposter });
       } else {
         //lose
-        io.local.emit('score-stage', { won: false, imposter: imposter });
+        io.to(code).emit('score-stage', { won: false, imposter: imposter });
       }
     }
   });
@@ -201,9 +201,9 @@ io.on('connection', function (socket) {
   socket.on('score-reveal', function(data) {
     console.log("score reveal");
     socket.emit('score-reveal', data.code);
-    io.local.emit('score-stage', { players: rooms[data.code].players, code: data.code });
+    io.to(data.roomCode).emit('score-stage', { players: rooms[data.code].players, code: data.code });
     console.log({ players: rooms[data.code].players, code: data.code });
-    io.local.emit('player-names-again', { players: rooms[data.code].players, code: data.code });
+    io.to(data.roomCode).emit('player-names-again', { players: rooms[data.code].players, code: data.code });
   });
 
   socket.on('chat-message-send', function(data) {
@@ -217,7 +217,7 @@ io.on('connection', function (socket) {
 function sendPlayerNamesForLobby(roomCode) {
   //send the player names to the lobby
   // io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
-  io.local.emit('player-names', rooms[roomCode].players);
+  io.to(roomCode).emit('player-names', rooms[roomCode].players);
   // io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players);
   //console.log(io.sockets.in(roomCode).emit('player-names', rooms[roomCode].players));
   //getPlayerNamesForVoting(roomCode);
@@ -225,14 +225,14 @@ function sendPlayerNamesForLobby(roomCode) {
 
 function displayCategoryPageToAll(roomCode) {
   console.log("displayNextPageToAll called");
-  io.local.emit('categories-stage', rooms[roomCode].players);
+  io.to(roomCode).emit('categories-stage', rooms[roomCode].players);
   // io.local.emit('player-names-again', rooms[roomCode].players);
   // io.sockets.in(roomCode).emit('categories-stage', rooms[roomCode].players);
 }
 
 function displayRevealPlayersPageToAll(roomCode) {
   console.log("displayNextPageToAll called");
-  io.local.emit('player-roles-stage', rooms[roomCode].players);
+  io.to(roomCode).emit('player-roles-stage', rooms[roomCode].players);
   // io.sockets.in(roomCode).emit('categories-stage', rooms[roomCode].players);
 }
 
