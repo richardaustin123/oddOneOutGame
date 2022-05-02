@@ -352,7 +352,7 @@ border-radius: 5px;
   text-align: left;
   position: absolute;
   /* width: 300px; */
-  width: 92.5%;
+  width: 95%;
   /* margin: 10px -32.5px; */
   /* margin: 10px -10%; */
   /* margin: -100px 0 0 -50px; */
@@ -394,10 +394,29 @@ border-radius: 5px;
   transform: none;
 }
 
+@media only screen and (max-width: 900px) {
+
+  #menu {
+    width: 90%;
+    margin: 10px 0;
+    /* padding: 30px 10px 30px 10px; */
+  }
+}
+
 @media only screen and (max-width: 600px) {
 
   #menu {
+    width: 92.5%;
     margin: 10px -7%;
+    /* padding: 30px 10px 30px 10px; */
+  }
+}
+
+@media only screen and (max-width: 376px) {
+
+  #menu {
+    width: 88%;
+    margin: 10px -7.3%;
     /* padding: 30px 10px 30px 10px; */
   }
 }
