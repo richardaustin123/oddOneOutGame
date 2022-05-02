@@ -14,7 +14,57 @@
     <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
     <script src="app.js" defer></script>
 </head>
-<body>
+
+<!-- <div id="update-content"> -->
+
+<body style="margin: 0 8%;">
+
+    <nav role="navigation">
+    <div id="menuToggle">
+        <!--
+        A fake / hidden checkbox is used as click reciever,
+        so you can use the :checked selector on it.
+        -->
+        <input class="hamburger-input" id="hamburger-button" type="checkbox" onclick="displayNavMenu()"/>
+        
+        <!--
+        Some spans to act as a hamburger.
+        
+        They are acting like a real hamburger,
+        not that McDonalds stuff.
+        -->
+        <span></span>
+        <span></span>
+        <span></span>
+
+        <ul id="menu">
+            <!-- <button id="how-to-play-button">How to play</button> -->
+            <button id="how-to-play-button" class="button-class"><li>How to play</li></button>
+            <div id="how-to-instructions">
+                <ol id="instructions-list">
+                    <p>1. Gather a group of at least 3 people <br>
+                    2. One player make a room and the others join <br>
+                    3. One player will be an imposterp <br>
+                    4. The other players will be given the same item <br>
+                    5. Everyone will ask a question to another player <br>
+                    6. The goal is to figure out who the imposter is <br>
+                    7. Everyone will vote for who they think the imposter is <br>
+                    8. The imposter will be revealed to all...</p>
+
+                    <p id="close-instructions-text">Press this button again to close instructions</p>
+                </ol>
+            </div>
+
+            <div id="chat-room">
+                <h2>Chat Room</h2>
+                <input id="chat-message" class="input-fields">
+                <button id="send-chat-message" class="button-class">Send</button>
+                <ul id="chat-messages"></ul>
+            </div>
+        <!-- <a><li>Home</li></a> -->
+        </ul>
+    </div>
+    </nav>
 
     <div class="box">
         <div class="main-content">
@@ -152,7 +202,8 @@
     </div>
 
     <div class="middle-content">
-        <button id="how-to-play-button">How to play</button>
+        
+        <!-- <button id="how-to-play-button">How to play</button>
         <div id="how-to-instructions">
             <ol id="instructions-list">
                 <li>Gather a group of at least 3 people</li>
@@ -165,21 +216,23 @@
                 <li>The imposter will be revealed to all...</li>
             </ol>
             <p id="close-instructions-text">Press this button again to close instructions</p>
-        </div>
+        </div> -->
 
-        <div id="chat-room">
+        <!-- <div id="chat-room">
             <h2>Chat Room</h2>
             <input id="chat-message" class="input-fields">
             <button id="send-chat-message" class="button-class">Send</button>
             <ul id="chat-messages"></ul>
-        </div>
+        </div> -->
     </div>
 
+    <div id="fill-space"></div>
     <div class="row content">
         
     </div>
 
-    <div id="row footer" style="margin-bottom: 10px;">
+
+    <div id="row footer" style="margin-bottom: 30px;">
             <div id="footer-content">
                 <h3>Universally Challenged</h3>
                 <p>Created by:</p>
@@ -190,4 +243,7 @@
 </div>
     
 </body>
+
+<!-- </div> -->
+
 </html>

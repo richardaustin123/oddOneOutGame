@@ -1,270 +1,404 @@
 body {
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    /* display: flex;  */
-    justify-content: center;
-    /* background-image: linear-gradient(170deg, #E55D87, #5FC3E4 120%); */
-    background-image: linear-gradient(170deg, #cb8cff, #4241e8 120%);
-    /* background-color: #d76790; */
-    background-color: #cb8cff;
-    color: #fff;
-    height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  /* display: flex;  */
+  justify-content: center;
+  /* background-image: linear-gradient(170deg, #E55D87, #5FC3E4 120%); */
+  background-image: linear-gradient(170deg, #cb8cff, #4241e8 120%);
+  /* background-color: #d76790; */
+  background-color: #cb8cff;
+  color: #fff;
+  height: 100vh;
+  /* height: 100%; */
 }
 
 #lobby-content {
-    display: none;
+  display: none;
 }
 
 #game-page {
-    display: none;
+  display: none;
 }
 
 #voting-page {
-    display: none;
+  display: none;
 }
 
 #play-page {
-    display: none;
+  display: none;
 }
 
 #reveal-item-page {
-    display: none;
+  display: none;
 }
 
 #questions-page {
-    display: none;
+  display: none;
 }
 
 #scores-page {
-    display: none;
+  display: none;
 }
 
 #footer {
-    /* position: fixed; */
-    bottom: 0;
-    width: 100%;
-    /* height: 150px; */
-    border-top: 1px  solid #ccc;
-    /* border-top-width: 50%; */
-    /* margin-top: 10rem; */
+  /* position: fixed; */
+  bottom: 0;
+  width: 100%;
+  /* height: 150px; */
+  border-top: 1px  solid #ccc;
+  /* border-top-width: 50%; */
+  /* margin-top: 10rem; */
 }
 
 #title-heading {
-    font-size: 2.8rem;
-    margin-top: 70px;
-    text-shadow: #8365db 0 5px 2px;
-}
-
-h1 {
+  font-size: 2.8rem;
+  margin-top: 70px;
   text-shadow: #8365db 0 5px 2px;
 }
 
+h1 {
+text-shadow: #8365db 0 5px 2px;
+}
+
 .box {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
+display: flex;
+flex-flow: column;
+height: 100%;
 }
 
 .box .row.header {
-  flex: 0 1 auto;
-  /* The above is shorthand for:
-  flex-grow: 0,
-  flex-shrink: 1,
-  flex-basis: auto
-  */
+flex: 0 1 auto;
+/* The above is shorthand for:
+flex-grow: 0,
+flex-shrink: 1,
+flex-basis: auto
+*/
 }
 
 .box .row.content {
-  flex: 1 1 auto;
-  border-bottom: 1px  solid #ccc;
+flex: 1 1 auto;
+border-bottom: 1px  solid #ccc;
 }
 
 .box .row.footer {
-  flex: 0 1 40px;
-  margin-bottom: 10px;
+flex: 0 1 40px;
+margin-bottom: 10px;
 }
 
 .main-content {
-  margin-bottom: 30px;
+margin-bottom: 30px;
+}
+
+#fill-space {
+  height: 500px;
 }
 
 /* .vote-button-class {
-    appearance: none;
-  background-color: #FAFBFC;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
-  box-sizing: border-box;
-  color: #24292E;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  padding: 6px 16px;
-  position: relative;
-  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap;
-  word-wrap: break-word;
+  appearance: none;
+background-color: #FAFBFC;
+border: 1px solid rgba(27, 31, 35, 0.15);
+border-radius: 6px;
+box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+box-sizing: border-box;
+color: #24292E;
+cursor: pointer;
+display: inline-block;
+font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+font-size: 14px;
+font-weight: 500;
+line-height: 20px;
+list-style: none;
+padding: 6px 16px;
+position: relative;
+transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+vertical-align: middle;
+white-space: nowrap;
+word-wrap: break-word;
 } */
 
 .button-class {
-  /* background: #4946fa; */
-  background-image: linear-gradient(170deg, #4241e8, #5453f5 120%);
-  border-radius: 999px;
-  box-shadow: #5E5DF0 0 10px 20px -5px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 24px;
-  opacity: 1;
-  outline: 0 solid transparent;
-  padding: 8px 18px;
-  margin: 3px 5px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: fit-content;
-  /* width: 7.6rem; */
-  word-break: break-word;
-  border: 0;
+/* background: #4946fa; */
+background-image: linear-gradient(170deg, #4241e8, #5453f5 120%);
+border-radius: 999px;
+box-shadow: #5E5DF0 0 10px 20px -5px;
+box-sizing: border-box;
+color: #FFFFFF;
+cursor: pointer;
+font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+font-size: 16px;
+font-weight: 700;
+line-height: 24px;
+opacity: 1;
+outline: 0 solid transparent;
+padding: 8px 18px;
+margin: 3px 5px;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+width: fit-content;
+/* width: 7.6rem; */
+word-break: break-word;
+border: 0;
 }
 
 /*vote button class hover*/
 .button-class:hover {
-  /* background: #4e4ed2; */
-  background-image: linear-gradient(170deg, #4e4de3, #3837cc 120%);
-  box-shadow: #4e4ed2 0 10px 20px -10px;
+/* background: #4e4ed2; */
+background-image: linear-gradient(170deg, #4e4de3, #3837cc 120%);
+box-shadow: #4e4ed2 0 10px 20px -10px;
 }
 
 
 .input-fields {
-    width: 12rem;
-    height: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: #8365db 0 10px 20px -5px;
+  width: 12rem;
+  height: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: #8365db 0 10px 20px -5px;
 }
 
 #player-buttons {
-    /*  */
-    justify-content: center;
-    padding-left: 0px;;
+  /*  */
+  justify-content: center;
+  padding-left: 0px;;
 }
 
 .player-list-class {
-    padding-left: 0px;
+  padding-left: 0px;
 }
 
 #how-to-play-button {
-  background-color: transparent;
-  border-radius: 999px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 24px;
-  outline: 0 solid transparent;
-  padding: 8px 18px;
-  margin: 3px 5px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: fit-content;
-  /* width: 7.6rem; */
-  word-break: break-word;
-  border: 0;
+background-color: transparent;
+border-radius: 999px;
+box-sizing: border-box;
+/* color: #3837cc; */
+color: #FFFFFF;
+cursor: pointer;
+font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+font-size: 20px;
+font-weight: 700;
+line-height: 24px;
+outline: 0 solid transparent;
+padding: 3px 20px;
+margin: 3px 15px;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+width: fit-content; 
+/* width: 7.6rem; */
+word-break: break-word;
+border: 0;
 }
 
+
 #how-to-instructions {
-  display: none;
+display: none;
 }
 
 #instructions-list {
-  /* display: none; */
-  list-style-type: none;
-  margin: 15px 0px;
-  padding: 0px;
+/* display: none; */
+list-style-type: none;
+margin: 15px 0px;
+padding: 0px;
+font-size: 1rem;
+text-align: left;
 }
 
 #close-instructions-text {
-  font-size: 0.8rem;
+font-size: 0.8rem;
 }
 
 
 #chat-room {
-  border: 1px solid #ccc;
-  margin: 1rem;
+/* border: 1px solid #ccc; */
+margin: 1rem;
+border-radius: 5px;
+}
+
+#chat-messages {
+  margin: 0 -35px;
+}
+
+#instructions-list {
+  margin: 0 15px;
+}
+
+
+
+
+
+/* navbar */
+
+
+#menuToggle
+{
+  display: block;
+  position: relative;
+  top: 50px;
+  /* left: 20px; */
+  
+  z-index: 1;
+  
+  -webkit-user-select: none;
+  user-select: none;
+  
   border-radius: 5px;
 }
 
-/* .growing-search {
-    padding: 5px 5px 5px 7px;
-    border-radius: 5px;
-    background: #fff;
-  }
+#menuToggle a
+{
+  text-decoration: none;
+  color: #FFFFFF;
   
-  .growing-search div {
-    display: inline-block;
-    font-size: 12px;
-  }
-  
-  .growing-search .input input {
-    margin-right: 0;
-    border: none;
-    font-size: inherit;
-    transition: width 200ms;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-bottom: 5px;
-    width: 55px;
-    color: #aaa;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .growing-search .input input:focus {
-    width: 150px;
-  }
-  
-  .growing-search .submit button {
-    margin-left: 0;
-    border: none;
-    font-size: 1.15em;
-    color: #aaa;
-    background-color: #fff;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    transition: color 200ms;
-  }
-  
-  .growing-search .input input:hover, .growing-search .submit button:hover {
-    cursor: pointer;
-  }
-  
-  .growing-search .input input:focus, .growing-search .submit button:focus {
-    outline: none;
-  }
-  
-  .growing-search .submit button:hover {
-    color: #3498db;
-  }
+  transition: color 0.3s ease;
+}
 
-  center > h4 { color: #00a0d1; margin-top: 50px; }
-    body { margin: 0; font-family: Arial; background-color: #3498db; }
-    ul#growing-search-freebie { display: table; list-style: none; margin: 5px auto 0 auto; padding: 0; }
-    ul#growing-search-freebie > li { float: left; margin-right: 5px; margin-bottom: 0px; padding: 10px 10px; }
-    ul#growing-search-freebie > li:last-child { margin-right: 0; }
-    ul#growing-search-freebie > li > span { margin-bottom: 10px; } */
+/* #menuToggle a:hover
+{
+  color: tomato;
+} */
+
+
+#menuToggle .hamburger-input
+{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span
+{
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  
+  background: #FFFFFF;
+  border-radius: 3px;
+  
+  z-index: 1;
+  
+  transform-origin: 4px 0px;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+}
+
+#menuToggle span:first-child
+{
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2)
+{
+  transform-origin: 0% 100%;
+}
+
+/* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked ~ span
+{
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #FFFFFF;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle input:checked ~ span:nth-last-child(3)
+{
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle input:checked ~ span:nth-last-child(2)
+{
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+#menu
+{
+  display: none;
+  text-align: left;
+  position: absolute;
+  /* width: 300px; */
+  width: 92.5%;
+  /* margin: 10px -32.5px; */
+  /* margin: 10px -10%; */
+  /* margin: -100px 0 0 -50px; */
+  /* margin: -75px -117px; */
+  /* margin: auto; */
+  padding: 30px;
+  /* padding: 50px; */
+  /* padding-top: 70px; */
+  border-radius: 10px;
+  
+  /* background: rgba(142, 77, 196); */
+  background-image: linear-gradient(170deg, #bb76f3, #5a5af8 120%);
+  /* background-image: linear-gradient(170deg, #a371ea, #c296fb 120%); */
+  /* color: #3837cc; */
+  color: #FFFFFF;
+  border: 5px solid #FFFFFF;
+  /* opacity: 0.5; */
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+  
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu li
+{
+  padding: 10px 0;
+  /* font-size: 22px; */
+}
+
+/*
+ * And let's slide it in from the left
+ */
+#menuToggle input:checked ~ ul
+{
+  transform: none;
+}
+
+@media only screen and (max-width: 600px) {
+
+  #menu {
+    margin: 10px -7%;
+    /* padding: 30px 10px 30px 10px; */
+  }
+}
+

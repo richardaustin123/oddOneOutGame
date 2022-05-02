@@ -1,5 +1,5 @@
-// const socket = io("http://localhost:3000/");
-const socket = io("https://oddoneoutgame.herokuapp.com/");
+const socket = io("http://localhost:3000/");
+// const socket = io("https://oddoneoutgame.herokuapp.com/");
 
 console.log("server started");
 
@@ -42,6 +42,9 @@ let howToPlayDiv = document.getElementById("how-to-instructions");
 let sendChatMessage = document.getElementById("send-chat-message");
 let chatMessages = document.getElementById("chat-messages");
 let inputChatMessage = document.getElementById("chat-message");
+let hamburgerButton = document.getElementById("hamburger-button");
+let hamburgerMenu = document.getElementById("menu");
+// let updateContent = document.getElementById("update-content");
 
 const foods = ["Pizza \u{1F355}", "Cottage Pie", "A Mango \u{1F96D}", "Caviar \u{1F95A}", "Pancakes \u{1F95E}", "Veggie Burger \u{1F354}"];
 const players = ["",""];
@@ -118,13 +121,29 @@ joinGamebutton.addEventListener("click", () => {
     }
 });
 
+hamburgerButton.addEventListener("click", () => {
+    // hamburgerMenu.style.display = showContent;
+    if(hamburgerMenu.style.display === showContent) {
+        hamburgerMenu.style.display = hideContent;
+    } else {
+        hamburgerMenu.style.display = showContent;
+    }
+});
+
+// check hamburgerButton checkbox is checked
+// hamburgerButton.checked()
+// function displayNavMenu() {
+//     hamburgerMenu.style.display = showContent;
+// }
+
 howToPlayButton.addEventListener("click", () => {
     //show the howToPlayDiv
-    if(howToPlayDiv.style.display === hideContent) {
-        howToPlayDiv.style.display = showContent;
-    } else {
+    if(howToPlayDiv.style.display === showContent) {
         howToPlayDiv.style.display = hideContent;
+    } else {
+        howToPlayDiv.style.display = showContent;
     }
+    // updateContent.style.display = showContent;
 });
 
 startGameButton.addEventListener("click", () => {
@@ -191,6 +210,7 @@ sendChatMessage.onclick = () => {
     inputChatMessage.focus();
     console.log({ message : val, name : playerName, roomCode : globalRoomCode});
     socket.emit('chat-message-send', { message : val, name : playerName, roomCode : globalRoomCode});
+    updateContent.style.display = showContent;
 };
 
 
